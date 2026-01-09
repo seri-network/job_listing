@@ -103,22 +103,44 @@
         `;
     }
 
-    function parseResults(data) {
-        $("#job-listings").empty();
+    // function parseResults(data) {
+    //     $("#job-listings").empty();
 
-        let found = false;
+    //     let found = false;
 
-        data.job_openings.forEach((job, index) => {
-            if (job.country_code === "IN") {
-                found = true;
-                $("#job-listings").append(createAdHtml(job, index));
-            }
-        });
+    //     data.job_openings.forEach((job, index) => {
+    //         if (job.country_code === "IN") {
+    //             found = true;
+    //             $("#job-listings").append(createAdHtml(job, index));
+    //         }
+    //     });
 
-        if (!found) {
-            $("#job-listings").html("<p>No India jobs found.</p>");
-        }
+    //     if (!found) {
+    //         $("#job-listings").html("<p>No India jobs found.</p>");
+    //     }
+    // }
+    function parseResults(jobs) {
+    $('#job-listings').empty();
+
+    if (!jobs.job_openings || jobs.job_openings.length === 0) {
+        $('#job-listings').html("<p>No job listings found.</p>");
+        return;
     }
+
+    let found = false;
+
+    $.each(jobs.job_openings, function (index, value) {
+        if (value.country_code === "IN") {
+            found = true;
+            $('#job-listings').append(createAdHtml(value, index));
+        }
+    });
+
+    if (!found) {
+        $('#job-listings').html("<p>No India jobs found.</p>");
+    }
+}
+
 
     $(document).ready(function () {
         $.getJSON("/.netlify/functions/jobs", parseResults)
@@ -130,3 +152,4 @@
 
 </body>
 </html>
+
