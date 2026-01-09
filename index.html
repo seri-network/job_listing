@@ -81,9 +81,11 @@ function isBangladesh(lat, lon) {
 
 function isIndia(lat, lon) {
     return lat >= 6 && lat <= 37.5 &&
-           lon >= 68 && lon <= 97.5 &&
-           !isPakistan(lat, lon) &&
-           !isBangladesh(lat, lon);
+           lon >= 68 && lon <= 97.5 
+        // &&
+        //    !isPakistan(lat, lon) &&
+        //    !isBangladesh(lat, lon)
+        ;
 }
 
 /* ---------- UI ---------- */
@@ -136,3 +138,4 @@ $(document).ready(function () {
 
 </body>
 </html>
+
