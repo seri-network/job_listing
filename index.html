@@ -80,14 +80,13 @@ function isBangladesh(lat, lon) {
 }
 
 function isIndia(lat, lon) {
-    return lat >= 6 && lat <= 37.5 &&
-           lon >= 68 && lon <= 97.5 
-        // &&
-        //    !isPakistan(lat, lon) &&
-        //    !isBangladesh(lat, lon)
-        ;
+    return (
+        typeof lat === "number" &&
+        typeof lon === "number" &&
+        lat >= 6.0 && lat <= 38.0 &&
+        lon >= 68.0 && lon <= 98.0
+    );
 }
-
 /* ---------- UI ---------- */
 
 function toggleDetails(i) {
@@ -138,4 +137,5 @@ $(document).ready(function () {
 
 </body>
 </html>
+
 
