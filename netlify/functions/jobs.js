@@ -1,23 +1,32 @@
+import https from "https";
+
 export async function handler() {
-  try {
-    const res = await fetch(
-      "https://backend.econjobmarket.org/data/zz_public/json/Feature/5"
-    );
+  return new Promise((resolve) => {
+    https.get(
+      "https://backend.econjobmarket.org/data/zz_public/json/Ads",
+      (res) => {
+        let body = "";
 
-    const data = await res.json();
+        res.on("data", chunk => {
+          body += chunk;
+        });
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "API fetch failed" })
-    };
-  }
+        res.on("end", () => {
+          resolve({
+            statusCode: 200,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json"
+            },
+            body: body
+          });
+        });
+      }
+    ).on("error", (err) => {
+      resolve({
+        statusCode: 500,
+        body: JSON.stringify({ error: "Failed to fetch jobs" })
+      });
+    });
+  });
 }
